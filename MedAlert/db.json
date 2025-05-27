@@ -1,0 +1,15 @@
+{
+    "medications": [
+      {
+        "id": 1,
+        "name": "Paracetamol",
+        "dosage": "500mg",
+        "time": "08:00 AM"
+      }
+    
+    ]
+    
+  }
+
+
+  
