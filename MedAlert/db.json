@@ -1,15 +1,82 @@
 {
-    "medications": [
-      {
-        "id": 1,
-        "name": "Paracetamol",
-        "dosage": "500mg",
-        "time": "08:00 AM"
-      }
-    
-    ]
-    
-  }
-
-
-  
+  "medications": [
+    {
+      "id": 1,
+      "name": "Paracetamol",
+      "dose": "500mg",
+      "time": "08:00 AM"
+    },
+    {
+      "id": 2,
+      "name": "Amoxicillin",
+      "dose": "250mg",
+      "time": "12:00 PM"
+    },
+    {
+      "id": "ad3d",
+      "name": "citrizin",
+      "dose": "200mg",
+      "time": "10:00pm"
+    }
+  ],
+  "calendar": [
+    {
+      "id": 1,
+      "date": "2025-05-28",
+      "events": [
+        {
+          "time": "08:00",
+          "description": "Take Paracetamol"
+        },
+        {
+          "time": "12:00",
+          "description": "Take Amoxicillin"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "date": "2025-05-29",
+      "events": [
+        {
+          "time": "10:00",
+          "description": "Doctor appointment with Dr. Amina"
+        }
+      ]
+    }
+  ],
+  "profiles": [
+    {
+      "id": 1,
+      "name": "Iqra Ahmed",
+      "email": "iqra@example.com",
+      "age": 23,
+      "gender": "Female",
+      "medicalConditions": [
+        "Asthma",
+        "Migraines"
+      ],
+      "profileImage": "https://via.placeholder.com/150"
+    }
+  ],
+  "appointments": [
+    {
+      "id": 1,
+      "patientId": 1,
+      "doctor": "Dr. Amina Noor",
+      "location": "Garissa General Hospital",
+      "date": "2025-05-29",
+      "time": "10:00",
+      "reason": "Routine check-up"
+    },
+    {
+      "id": 2,
+      "patientId": 1,
+      "doctor": "Dr. Yusuf Abdi",
+      "location": "Garissa Heart Clinic",
+      "date": "2025-06-01",
+      "time": "14:30",
+      "reason": "Cardiology follow-up"
+    }
+  ]
+}

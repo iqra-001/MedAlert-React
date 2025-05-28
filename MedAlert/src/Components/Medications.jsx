@@ -1,81 +1,91 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { FaPills, FaPlus, FaTrash, FaEdit } from 'react-icons/fa';
 
-export default function Medications() {
+const API_URL = 'http://localhost:3000/medications';
+
+function Medications() {
   const [medications, setMedications] = useState([]);
-  const [newMed, setNewMed] = useState({ name: '', dosage: '', time: '' });
+  const [newMed, setNewMed] = useState({ name: '', dose: '', time: '' });
+  const [editingId, setEditingId] = useState(null);
 
-  const api = 'http://localhost:3000/medications';
-
-  // READ
   useEffect(() => {
-    axios.get(api).then(res => setMedications(res.data));
+    fetchMeds();
   }, []);
 
-  // CREATE
-  const addMedication = (e) => {
-    e.preventDefault();
-    axios.post(api, newMed).then(res => {
-      setMedications([...medications, res.data]);
-      setNewMed({ name: '', dosage: '', time: '' });
-    });
+  const fetchMeds = async () => {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    setMedications(data);
   };
 
-  //  DELETE
-  const deleteMedication = (id) => {
-    axios.delete(`${api}/${id}`).then(() => {
-      setMedications(medications.filter(med => med.id !== id));
+  const addMedication = async () => {
+    if (!newMed.name || !newMed.dose || !newMed.time) return;
+    await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newMed),
     });
+    setNewMed({ name: '', dose: '', time: '' });
+    fetchMeds();
   };
 
-  //  UPDATE
-  const updateMedication = (id, updatedMed) => {
-    axios.put(`${api}/${id}`, updatedMed).then(res => {
-      setMedications(medications.map(med => (med.id === id ? res.data : med)));
+  const deleteMedication = async (id) => {
+    await fetch(`${API_URL}/${id}`, {
+      method: 'DELETE',
     });
+    fetchMeds();
+  };
+
+  const startEdit = (med) => {
+    setNewMed(med);
+    setEditingId(med.id);
+  };
+
+  const updateMedication = async () => {
+    await fetch(`${API_URL}/${editingId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newMed),
+    });
+    setNewMed({ name: '', dose: '', time: '' });
+    setEditingId(null);
+    fetchMeds();
   };
 
   return (
-    <div className="max-w-xl mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">My Medications</h2>
-
-      <form onSubmit={updateMedication} className="space-y-2 mb-6">
+    <div className="container">
+      <h2><FaPills /> Medication Alert</h2>
+      <div>
         <input
-          type="text"
           placeholder="Name"
           value={newMed.name}
           onChange={(e) => setNewMed({ ...newMed, name: e.target.value })}
-          className="w-full p-2 border rounded"
         />
         <input
-          type="text"
-          placeholder="Dosage"
-          value={newMed.dosage}
-          onChange={(e) => setNewMed({ ...newMed, dosage: e.target.value })}
-          className="w-full p-2 border rounded"
+          placeholder="Dose"
+          value={newMed.dose}
+          onChange={(e) => setNewMed({ ...newMed, dose: e.target.value })}
         />
         <input
-          type="text"
           placeholder="Time"
           value={newMed.time}
           onChange={(e) => setNewMed({ ...newMed, time: e.target.value })}
-          className="w-full p-2 border rounded"
         />
-        <button className="bg-teal-600 text-white px-4 py-2 rounded">Add Medication</button>
-      </form>
-
-      <ul className="space-y-3">
+        <button onClick={editingId ? updateMedication : addMedication}>
+          {editingId ? <FaEdit /> : <FaPlus />}
+        </button>
+      </div>
+      <ul>
         {medications.map((med) => (
-          <li key={med.id} className="flex justify-between items-center bg-white p-3 shadow rounded">
-            <div>
-              <strong>{med.name}</strong> – {med.dosage} at {med.time}
-            </div>
-            <button onClick={() => deleteMedication(med.id)} className="text-red-500 hover:underline">
-              Delete
-            </button>
+          <li key={med.id}>
+            <strong>{med.name}</strong> {med.dose} @ {med.time}
+            <button onClick={() => startEdit(med)}><FaEdit /></button>
+            <button onClick={() => deleteMedication(med.id)}><FaTrash /></button>
           </li>
         ))}
       </ul>
     </div>
   );
 }
+
+export default Medications;

@@ -6,12 +6,14 @@ import DashBoard from './Components/DashBoard';
 import Medications from './Components/Medications';
 import Calendar from './Components/Calender';
 import Profile from './Components/Profile';
+import AboutUs from './Components/AboutUs';
 
 function App() {
   return (
     
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path='/Aboutus' element={<AboutUs/>}/>
         <Route path="/signup" element={<SignUp />} />
 
         {/* Nested Dashboard */}

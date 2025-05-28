@@ -8,9 +8,13 @@ export default function DashBoard() {
       <aside className="w-64 bg-teal-700 text-white p-6 space-y-6">
         <h2 className="text-2xl font-bold mb-6">MedAlert</h2>
         <nav className="flex flex-col space-y-4">
-          <Link to="/medications" className="hover:underline">Medications</Link>
-          <Link to="/calendar" className="hover:underline">Calendar</Link>
-          <Link to="/profile" className="hover:underline">Profile</Link>
+        <Link to="/dashboard/medications" className="hover:underline">Medications</Link>
+<Link to="/dashboard/calendar" className="hover:underline">Calendar</Link>
+<Link to="/dashboard/profile" className="hover:underline">Profile</Link>
+<Link to="/dashboard/appointments" className="hover:underline">Appointments</Link>
+
+
+
         </nav>
       </aside>
 
